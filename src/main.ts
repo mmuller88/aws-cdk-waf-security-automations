@@ -15,7 +15,7 @@ const prodEnv = {
 
 const app = new core.App();
 
-const ddbDevStack = new GlobalDynamoDBStack(app, 'DdbDev', { env: devEnv });
+const ddbDevStack = new GlobalDynamoDBStack(app, 'DdbDev2', { env: devEnv });
 const ddbProdStack = new GlobalDynamoDBStack(app, 'DdbProd', { env: prodEnv });
 
 new BuildPipelineStack(app, 'BuildPipelineStack', {
