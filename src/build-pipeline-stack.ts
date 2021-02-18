@@ -59,7 +59,7 @@ export class BuildPipelineStack extends core.Stack {
           ],
         },
         {
-          stageName: 'BuildAndAdministerPipeline',
+          stageName: 'Build',
           actions: [
             new codepipeline_actions.CodeBuildAction({
               actionName: 'CDK_Build',
@@ -68,21 +68,32 @@ export class BuildPipelineStack extends core.Stack {
               outputs: [cdkBuildOutput],
               runOrder: 1,
             }),
+          ],
+        },
+        // {
+        //   stageName: 'UpdatePipeline',
+        //   actions: [
+        //     new codepipeline_actions.CloudFormationCreateUpdateStackAction({
+        //       actionName: 'AdministerPipeline',
+        //       templatePath: cdkBuildOutput.atPath(`${this.stackName}.template.json`),
+        //       stackName: this.stackName,
+        //       adminPermissions: true,
+        //       runOrder: 1,
+        //     }),
+        //   ],
+        // },
+        {
+          stageName: 'DeployDev',
+          actions: [
             new codepipeline_actions.CloudFormationCreateUpdateStackAction({
               actionName: `${props.devStack.stackName}`,
               account: props.devStack.account,
               templatePath: cdkBuildOutput.atPath(`${props.devStack.stackName}.template.json`),
               stackName: props.devStack.stackName,
+              region: props.devStack.region,
               adminPermissions: true,
               runOrder: 2,
             }),
-            // new codepipeline_actions.CloudFormationCreateUpdateStackAction({
-            //   actionName: 'AdministerPipeline',
-            //   templatePath: cdkBuildOutput.atPath(`${this.stackName}.template.json`),
-            //   stackName: this.stackName,
-            //   adminPermissions: true,
-            //   runOrder: 3,
-            // }),
           ],
         },
       ],

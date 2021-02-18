@@ -6,11 +6,11 @@ export class GlobalDynamoDBStack extends core.Stack {
     super(scope, id, props);
 
     new dynamodb.Table(this, 'Table', {
-      tableName: 'GlobalTable',
+      // tableName: 'GlobalTable',
       partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
       replicationRegions: [
         'us-east-1',
-        'us-east-2',
+        // 'us-east-2',
       ],
     });
 
