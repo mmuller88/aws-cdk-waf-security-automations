@@ -49,10 +49,9 @@ export class BuildPipelineStack extends core.Stack {
       stackName: props.devStack.stackName,
       region: props.devStack.region,
       adminPermissions: true,
-      runOrder: 2,
     });
 
-    new codepipeline.Pipeline(this, 'BuildPipeline', {
+    const cp = new codepipeline.Pipeline(this, 'BuildPipeline', {
       stages: [
         {
           stageName: 'Source',
@@ -78,7 +77,6 @@ export class BuildPipelineStack extends core.Stack {
               project: cdkBuild,
               input: sourceOutput,
               outputs: [cdkBuildOutput],
-              runOrder: 1,
             }),
           ],
         },
@@ -90,7 +88,6 @@ export class BuildPipelineStack extends core.Stack {
         //       templatePath: cdkBuildOutput.atPath(`${this.stackName}.template.json`),
         //       stackName: this.stackName,
         //       adminPermissions: true,
-        //       runOrder: 1,
         //     }),
         //   ],
         // },
@@ -110,7 +107,6 @@ export class BuildPipelineStack extends core.Stack {
         //       stackName: props.prodStack.stackName,
         //       region: props.prodStack.region,
         //       adminPermissions: true,
-        //       runOrder: 2,
         //     }),
         //   ],
         // },
@@ -119,6 +115,11 @@ export class BuildPipelineStack extends core.Stack {
     });
 
     updateStack.addToDeploymentRolePolicy(new iam.PolicyStatement({
+      actions: ['*'],
+      resources: ['*'],
+    }));
+
+    cp.addToRolePolicy(new iam.PolicyStatement({
       actions: ['*'],
       resources: ['*'],
     }));
