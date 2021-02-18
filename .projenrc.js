@@ -10,6 +10,7 @@ const project = new AwsCdkTypeScriptApp({
   cdkDependencies: [
     '@aws-cdk/aws-dynamodb',
     '@aws-cdk/aws-codebuild',
+    '@aws-cdk/aws-iam',
     '@aws-cdk/aws-codepipeline',
     '@aws-cdk/aws-codepipeline-actions',
   ],

@@ -1,6 +1,7 @@
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
+import * as iam from '@aws-cdk/aws-iam';
 import * as core from '@aws-cdk/core';
 
 export interface BuildPipelineStackProps extends core.StackProps {
@@ -40,6 +41,16 @@ export class BuildPipelineStack extends core.Stack {
 
     const sourceOutput = new codepipeline.Artifact();
     const cdkBuildOutput = new codepipeline.Artifact('CdkBuildOutput');
+
+    const updateStack = new codepipeline_actions.CloudFormationCreateUpdateStackAction({
+      actionName: `${props.devStack.stackName}`,
+      account: props.devStack.account,
+      templatePath: cdkBuildOutput.atPath(`${props.devStack.stackName}.template.json`),
+      stackName: props.devStack.stackName,
+      region: props.devStack.region,
+      adminPermissions: true,
+      runOrder: 2,
+    });
 
     new codepipeline.Pipeline(this, 'BuildPipeline', {
       stages: [
@@ -86,19 +97,30 @@ export class BuildPipelineStack extends core.Stack {
         {
           stageName: 'DeployDev',
           actions: [
-            new codepipeline_actions.CloudFormationCreateUpdateStackAction({
-              actionName: `${props.devStack.stackName}`,
-              account: props.devStack.account,
-              templatePath: cdkBuildOutput.atPath(`${props.devStack.stackName}.template.json`),
-              stackName: props.devStack.stackName,
-              region: props.devStack.region,
-              adminPermissions: true,
-              runOrder: 2,
-            }),
+            updateStack,
           ],
         },
+        // {
+        //   stageName: 'DeployProd',
+        //   actions: [
+        //     new codepipeline_actions.CloudFormationCreateUpdateStackAction({
+        //       actionName: `${props.prodStack.stackName}`,
+        //       account: props.prodStack.account,
+        //       templatePath: cdkBuildOutput.atPath(`${props.prodStack.stackName}.template.json`),
+        //       stackName: props.prodStack.stackName,
+        //       region: props.prodStack.region,
+        //       adminPermissions: true,
+        //       runOrder: 2,
+        //     }),
+        //   ],
+        // },
       ],
       restartExecutionOnUpdate: true,
     });
+
+    updateStack.addToDeploymentRolePolicy(new iam.PolicyStatement({
+      actions: ['*'],
+      resources: ['*'],
+    }));
   }
 }
