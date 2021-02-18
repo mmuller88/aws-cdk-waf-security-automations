@@ -9,6 +9,9 @@ const project = new AwsCdkTypeScriptApp({
   name: 'cdk-dynamodb-pipe-poc',
   cdkDependencies: [
     '@aws-cdk/aws-dynamodb',
+    '@aws-cdk/aws-codebuild',
+    '@aws-cdk/aws-codepipeline',
+    '@aws-cdk/aws-codepipeline-actions',
   ],
   deps: [],
   devDeps: [],
@@ -25,5 +28,8 @@ const project = new AwsCdkTypeScriptApp({
     'codepipeline',
   ],
 });
+
+project.setScript('cdkDeploy', 'cdk deploy');
+project.setScript('cdkDestroy', 'cdk destroy');
 
 project.synth();
