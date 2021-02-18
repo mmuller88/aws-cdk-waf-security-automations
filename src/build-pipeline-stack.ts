@@ -21,7 +21,7 @@ export class BuildPipelineStack extends core.Stack {
             'commands': ['npm i npm@latest -g', 'npm install'],
           },
           build: {
-            commands: ['npm run build', 'npm run cdk synth -- -o dist'],
+            commands: ['npm run build', 'npx run cdk synth -- -o dist'],
           },
         },
         artifacts: {
