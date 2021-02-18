@@ -49,6 +49,7 @@ export class BuildPipelineStack extends core.Stack {
             new codepipeline_actions.GitHubSourceAction({
               owner: 'mmuller88',
               repo: 'cdk-dynamodb-pipe-poc',
+              branch: 'main',
               output: sourceOutput,
               actionName: 'GitHubSource',
               oauthToken: core.SecretValue.secretsManager('alfcdk', {

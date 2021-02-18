@@ -7,6 +7,7 @@ export class GlobalDynamoDBStack extends core.Stack {
 
     new dynamodb.Table(this, 'Table', {
       // tableName: 'GlobalTable',
+      removalPolicy: core.RemovalPolicy.DESTROY,
       partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
       replicationRegions: [
         'us-east-1',
