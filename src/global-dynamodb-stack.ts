@@ -9,10 +9,10 @@ export class GlobalDynamoDBStack extends core.Stack {
       // tableName: 'GlobalTable',
       removalPolicy: core.RemovalPolicy.DESTROY,
       partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
-      // replicationRegions: [
-      //   'us-east-1',
-      //   // 'us-east-2',
-      // ],
+      replicationRegions: [
+        'us-east-1',
+        // 'us-east-2',
+      ],
     });
 
     // new CfnOutput(this, 'bla', {
