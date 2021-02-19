@@ -45,7 +45,7 @@ export class BuildPipelineStack extends core.Stack {
 
     const deployProject = new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName));
     deployProject.addToRolePolicy(new iam.PolicyStatement({
-      actions: ['cloudformation:DescribeStacks'],
+      actions: ['*'],
       resources: ['*'],
     }));
 
