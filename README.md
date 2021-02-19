@@ -37,6 +37,15 @@ Don't forget to Bootstrap you region e.g.:
 cdk bootstrap --trust 111111111 --force --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess aws://22222222/ca-central-1 --profile default
 ```
 
+If you get:
+
+```
+1:22:28 PM | CREATE_FAILED        | AWS::CodePipeline::Pipeline | BuildPipelineB0A659C0
+Internal Failure
+```
+
+check if the oauthToken: core.SecretValue.secretsManager( ... exist in the region where you deploy the pipeline to.
+
 # Useful
 
 Quick iterating with destroying and deploying the pipe
