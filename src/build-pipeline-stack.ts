@@ -1,6 +1,7 @@
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
+import * as iam from '@aws-cdk/aws-iam';
 import * as core from '@aws-cdk/core';
 
 export interface BuildPipelineStackProps extends core.StackProps {
@@ -41,6 +42,16 @@ export class BuildPipelineStack extends core.Stack {
 
     const sourceOutput = new codepipeline.Artifact();
     const cdkBuildOutput = new codepipeline.Artifact('CdkBuildOutput');
+
+    const deploy = new codepipeline_actions.CodeBuildAction({
+      actionName: `${props.devStack.stackName}`,
+      project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
+      input: cdkBuildOutput,
+      role: new iam.Role(this, 'DeployRole', {
+        assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
+        managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess')],
+      }),
+    });
 
     new codepipeline.Pipeline(this, 'BuildPipeline', {
       stages: [
@@ -86,17 +97,12 @@ export class BuildPipelineStack extends core.Stack {
         {
           stageName: 'DeployDev',
           actions: [
-            new codepipeline_actions.CodeBuildAction({
-              actionName: `${props.devStack.stackName}`,
-              project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
-              input: cdkBuildOutput,
-            }),
+            deploy,
           ],
         },
       ],
       restartExecutionOnUpdate: true,
     });
-
   }
 }
 
