@@ -111,7 +111,7 @@ function updateStack(stackName: string) {
           'commands': ['npm i npm@latest -g', 'npm i cdk@latest -g', 'npm install'],
         },
         build: {
-          commands: [`cdk deploy --app '.' ${stackName}`],
+          commands: [`cdk deploy --app 'cdk.out/' ${stackName}`],
         },
       },
     }),
