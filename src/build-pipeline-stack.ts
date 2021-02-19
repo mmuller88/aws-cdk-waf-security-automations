@@ -59,8 +59,8 @@ export class BuildPipelineStack extends core.Stack {
       resources: ['*'],
     }));
 
-    const pipeline = new codepipeline.Pipeline(this, 'BuildPipeline', {
-      role: pipelineRole,
+    new codepipeline.Pipeline(this, 'BuildPipeline', {
+      // role: pipelineRole,
       stages: [
         {
           stageName: 'Source',
@@ -113,12 +113,12 @@ export class BuildPipelineStack extends core.Stack {
 
     // workaround https://stackoverflow.com/questions/63659802/cannot-assume-role-by-code-pipeline-on-code-pipeline-action-aws-cdk
     // Altering cloudformation to remove role arn from actions
-    const pipelineCfn = pipeline.node.defaultChild as core.CfnResource;
-    // addDeletionOverride  removes the property from the cloudformation itself
-    // Delete action arn for every stage and action created
-    pipelineCfn.addDeletionOverride('Properties.Stages.1.Actions.0.RoleArn');
-    pipelineCfn.addDeletionOverride('Properties.Stages.2.Actions.0.RoleArn');
-    pipelineCfn.addDeletionOverride('Properties.Stages.3.Actions.0.RoleArn');
+    //   const pipelineCfn = pipeline.node.defaultChild as core.CfnResource;
+    //   // addDeletionOverride  removes the property from the cloudformation itself
+    //   // Delete action arn for every stage and action created
+    //   pipelineCfn.addDeletionOverride('Properties.Stages.1.Actions.0.RoleArn');
+    //   pipelineCfn.addDeletionOverride('Properties.Stages.2.Actions.0.RoleArn');
+    //   pipelineCfn.addDeletionOverride('Properties.Stages.3.Actions.0.RoleArn');
   }
 }
 
@@ -133,7 +133,7 @@ function updateStack(stackName: string) {
         },
         build: {
           commands: [
-            `cdk deploy --app 'cdk.out/' ${stackName} --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess`,
+            `cdk deploy --app 'cdk.out/' ${stackName}`, //--cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess`,
           ],
         },
       },
