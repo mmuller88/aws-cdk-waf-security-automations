@@ -59,7 +59,7 @@ export class BuildPipelineStack extends core.Stack {
       resources: ['*'],
     }));
 
-    new codepipeline.Pipeline(this, 'BuildPipeline', {
+    const pipeline = new codepipeline.Pipeline(this, 'BuildPipeline', {
       role: pipelineRole,
       stages: [
         {
@@ -110,6 +110,14 @@ export class BuildPipelineStack extends core.Stack {
       ],
       restartExecutionOnUpdate: true,
     });
+
+    // Altering cloudformation to remove role arn from actions
+    const pipelineCfn = pipeline.node.defaultChild as core.CfnResource;
+    // addDeletionOverride  removes the property from the cloudformation itself
+    // Delete action arn for every stage and action created
+    pipelineCfn.addDeletionOverride('Properties.Stages.1.Actions.0.RoleArn');
+    pipelineCfn.addDeletionOverride('Properties.Stages.2.Actions.0.RoleArn');
+    pipelineCfn.addDeletionOverride('Properties.Stages.3.Actions.0.RoleArn');
   }
 }
 
