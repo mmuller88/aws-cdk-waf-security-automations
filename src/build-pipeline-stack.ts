@@ -47,13 +47,20 @@ export class BuildPipelineStack extends core.Stack {
       actionName: `${props.devStack.stackName}`,
       project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
       input: cdkBuildOutput,
-      role: new iam.Role(this, 'DeployRole', {
-        assumedBy: new iam.ServicePrincipal('codebuild.amazonaws.com'),
-        managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess')],
-      }),
     });
 
+    const pipelineRole = new iam.Role(this, 'DeployRole', {
+      assumedBy: new iam.ServicePrincipal('codepipeline.amazonaws.com'),
+      //managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess')],
+    });
+
+    pipelineRole.addToPolicy(new iam.PolicyStatement({
+      actions: ['*'],
+      resources: ['*'],
+    }));
+
     new codepipeline.Pipeline(this, 'BuildPipeline', {
+      role: pipelineRole,
       stages: [
         {
           stageName: 'Source',
