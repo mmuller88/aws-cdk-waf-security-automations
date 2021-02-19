@@ -111,6 +111,7 @@ export class BuildPipelineStack extends core.Stack {
       restartExecutionOnUpdate: true,
     });
 
+    // workaround https://stackoverflow.com/questions/63659802/cannot-assume-role-by-code-pipeline-on-code-pipeline-action-aws-cdk
     // Altering cloudformation to remove role arn from actions
     const pipelineCfn = pipeline.node.defaultChild as core.CfnResource;
     // addDeletionOverride  removes the property from the cloudformation itself
@@ -132,7 +133,7 @@ function updateStack(stackName: string) {
         },
         build: {
           commands: [
-            `ls -la && cdk deploy --app 'cdk.out/' ${stackName}`,
+            `cdk deploy --app 'cdk.out/' ${stackName} --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess`,
           ],
         },
       },
