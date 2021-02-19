@@ -29,6 +29,14 @@ yarn cdkDeploy 'BuildPipelineStack'
 
 The pipeline is not self mutating! A code change of the pipeline makes it necessary to deploy the pipeline again!
 
+# Troubleshooting
+
+Don't forget to Bootstrap you region e.g.:
+
+```
+cdk bootstrap --trust 111111111 --force --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess aws://22222222/ca-central-1 --profile default
+```
+
 # Useful
 
 Quick iterating with destroying and deploying the pipe
