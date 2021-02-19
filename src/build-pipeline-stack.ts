@@ -89,7 +89,7 @@ export class BuildPipelineStack extends core.Stack {
             new codepipeline_actions.CodeBuildAction({
               actionName: `${props.devStack.stackName}`,
               project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
-              input: sourceOutput,
+              input: cdkBuildOutput,
             }),
           ],
         },
@@ -111,7 +111,7 @@ function updateStack(stackName: string) {
         },
         build: {
           commands: [
-            `ls -la && cdk deploy --app '.' ${stackName}`,
+            `ls -la && cdk deploy --app 'cdk.out/' ${stackName}`,
           ],
         },
       },
