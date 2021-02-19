@@ -25,11 +25,12 @@ export class BuildPipelineStack extends core.Stack {
           },
         },
         artifacts: {
-          'base-directory': 'cdk.out',
-          'files': [
-            `${this.stackName}.template.json`,
-            `${props.devStack.stackName}.template.json`,
-            `${props.prodStack.stackName}.template.json`,
+          // 'base-directory': 'cdk.out',
+          files: [
+            'cdk.out/**/*',
+            // `${this.stackName}.template.json`,
+            // `${props.devStack.stackName}.template.json`,
+            // `${props.prodStack.stackName}.template.json`,
           ],
         },
       }),
@@ -110,7 +111,7 @@ function updateStack(stackName: string) {
           'commands': ['npm i npm@latest -g', 'npm i cdk@latest -g', 'npm install'],
         },
         build: {
-          commands: [`cdk deploy --app 'cdk.out/' ${stackName}`],
+          commands: [`cdk deploy --app '.' ${stackName}`],
         },
       },
     }),
