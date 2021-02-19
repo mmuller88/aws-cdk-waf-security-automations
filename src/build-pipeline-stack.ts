@@ -41,32 +41,6 @@ export class BuildPipelineStack extends core.Stack {
     const sourceOutput = new codepipeline.Artifact();
     const cdkBuildOutput = new codepipeline.Artifact('CdkBuildOutput');
 
-    const updateStackDev = new codebuild.PipelineProject(this, 'updateStackDev', {
-      buildSpec: codebuild.BuildSpec.fromObject({
-        version: '0.2',
-        phases: {
-          install: {
-            'runtime-versions': { nodejs: 12 },
-            'commands': ['npm i npm@latest -g', 'npm install'],
-          },
-          build: {
-            commands: [`cdk deploy --app 'cdk.out/' ${props.devStack.stackName}`],
-          },
-        },
-        // artifacts: {
-        //   'base-directory': 'cdk.out',
-        //   'files': [
-        //     `${this.stackName}.template.json`,
-        //     `${props.devStack.stackName}.template.json`,
-        //     `${props.prodStack.stackName}.template.json`,
-        //   ],
-        // },
-      }),
-      environment: {
-        buildImage: codebuild.LinuxBuildImage.STANDARD_3_0,
-      },
-    });
-
     new codepipeline.Pipeline(this, 'BuildPipeline', {
       stages: [
         {
@@ -113,7 +87,7 @@ export class BuildPipelineStack extends core.Stack {
           actions: [
             new codepipeline_actions.CodeBuildAction({
               actionName: `${props.devStack.stackName}`,
-              project: updateStackDev,
+              project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
               input: sourceOutput,
               //outputs: [cdkBuildOutput],
             }),
@@ -124,4 +98,24 @@ export class BuildPipelineStack extends core.Stack {
     });
 
   }
+}
+
+function updateStack(stackName: string) {
+  return {
+    buildSpec: codebuild.BuildSpec.fromObject({
+      version: '0.2',
+      phases: {
+        install: {
+          'runtime-versions': { nodejs: 12 },
+          'commands': ['npm i npm@latest -g', 'npm install'],
+        },
+        build: {
+          commands: [`cdk deploy --app 'cdk.out/' ${stackName}`],
+        },
+      },
+    }),
+    environment: {
+      buildImage: codebuild.LinuxBuildImage.STANDARD_3_0,
+    },
+  };
 }
