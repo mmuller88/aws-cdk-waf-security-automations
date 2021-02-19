@@ -107,7 +107,7 @@ function updateStack(stackName: string) {
       phases: {
         install: {
           'runtime-versions': { nodejs: 12 },
-          'commands': ['npm i npm@latest -g', 'npm install'],
+          'commands': ['npm i npm@latest -g', 'npm i cdk@latest -g', 'npm install'],
         },
         build: {
           commands: [`cdk deploy --app 'cdk.out/' ${stackName}`],
