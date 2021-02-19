@@ -71,7 +71,7 @@ export class BuildPipelineStack extends core.Stack {
             }),
           ],
         },
-        // I saw that in the web about mutating the pipeline. But please don't use it or be very causes.
+        // I saw that in the web about self mutating the pipeline. But please don't use it or be very causes.
         // {
         //   stageName: 'UpdatePipeline',
         //   actions: [
@@ -90,7 +90,6 @@ export class BuildPipelineStack extends core.Stack {
               actionName: `${props.devStack.stackName}`,
               project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
               input: sourceOutput,
-              //outputs: [cdkBuildOutput],
             }),
           ],
         },
@@ -111,7 +110,7 @@ function updateStack(stackName: string) {
           'commands': ['npm i npm@latest -g', 'npm i cdk@latest -g', 'npm install'],
         },
         build: {
-          commands: [`cdk deploy --app 'cdk.out/' ${stackName}`],
+          commands: [`ls cdk.out la && cdk deploy --app 'cdk.out/' ${stackName}`],
         },
       },
     }),
