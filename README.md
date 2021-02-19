@@ -28,3 +28,11 @@ yarn cdkDeploy 'BuildPipelineStack'
 ```
 
 The pipeline is not self mutating! A code change of the pipeline makes it necessary to deploy the pipeline again!
+
+# Useful
+
+Quick iterating with destroying and deploying the pipe
+
+```
+yes | yarn cdkDestroy 'BuildPipelineStack' && yarn cdkDeploy 'BuildPipelineStack' --require-approval never
+```

@@ -43,9 +43,15 @@ export class BuildPipelineStack extends core.Stack {
     const sourceOutput = new codepipeline.Artifact();
     const cdkBuildOutput = new codepipeline.Artifact('CdkBuildOutput');
 
+    const deployProject = new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName));
+    deployProject.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['cloudformation:DescribeStacks'],
+      resources: ['*'],
+    }));
+
     const deploy = new codepipeline_actions.CodeBuildAction({
       actionName: `${props.devStack.stackName}`,
-      project: new codebuild.PipelineProject(this, 'updateStackDev', updateStack(props.devStack.stackName)),
+      project: deployProject,
       input: cdkBuildOutput,
     });
 
@@ -133,7 +139,7 @@ function updateStack(stackName: string) {
         },
         build: {
           commands: [
-            `cdk deploy --app 'cdk.out/' ${stackName}`, //--cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess`,
+            `cdk deploy --app 'cdk.out/' ${stackName} --require-approval never`, //--cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess`,
           ],
         },
       },
