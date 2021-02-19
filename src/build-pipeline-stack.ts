@@ -93,25 +93,25 @@ export class BuildPipelineStack extends core.Stack {
         //   ],
         // },
         {
-          stageName: 'DeployDev',
+          stageName: 'Dev',
           actions: [
             new codepipeline_actions.CodeBuildAction({
-              actionName: `${props.devStack.stackName}`,
+              actionName: `Deploy${props.devStack.stackName}`,
               project: deployDevProject,
               input: cdkBuildOutput,
             }),
           ],
         },
-        // {
-        //   stageName: 'DeployProd',
-        //   actions: [
-        //     new codepipeline_actions.CodeBuildAction({
-        //       actionName: `${props.prodStack.stackName}`,
-        //       project: deployProdProject,
-        //       input: cdkBuildOutput,
-        //     }),
-        //   ],
-        // },
+        {
+          stageName: 'Prod',
+          actions: [
+            new codepipeline_actions.CodeBuildAction({
+              actionName: `Deploy${props.prodStack.stackName}`,
+              project: deployProdProject,
+              input: cdkBuildOutput,
+            }),
+          ],
+        },
       ],
       restartExecutionOnUpdate: true,
     });

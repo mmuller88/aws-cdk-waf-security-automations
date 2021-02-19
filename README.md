@@ -4,7 +4,7 @@ That is a CDK CodePipeline for deploying a global DynamoDB.
 
 # GitHub specifics
 
-You need to put your GitHub Token in src/build-pipeline-stack.ts :
+You need to put your GitHub Token in src/build-pipeline-stack.ts respectively to the used pipeline region e.g.:
 
 ```ts
 oauthToken: core.SecretValue.secretsManager('alfcdk', {
