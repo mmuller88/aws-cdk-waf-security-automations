@@ -5,8 +5,7 @@ import * as iam from '@aws-cdk/aws-iam';
 import * as core from '@aws-cdk/core';
 
 export interface BuildPipelineStackProps extends core.StackProps {
-  devStack: core.Stack;
-  prodStack: core.Stack;
+  stack: core.Stack;
 }
 
 export class BuildPipelineStack extends core.Stack {
@@ -32,21 +31,15 @@ export class BuildPipelineStack extends core.Stack {
         },
       }),
       environment: {
-        buildImage: codebuild.LinuxBuildImage.STANDARD_3_0,
+        buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_3,
       },
     });
 
     const sourceOutput = new codepipeline.Artifact();
     const cdkBuildOutput = new codepipeline.Artifact('CdkBuildOutput');
 
-    const deployDevProject = new codebuild.PipelineProject(this, 'updateStackDev', createUpdateStackSpec(props.devStack.stackName));
-    deployDevProject.addToRolePolicy(new iam.PolicyStatement({
-      actions: ['*'], // cloudformation:DescribeStacks, ssm:GetParameter
-      resources: ['*'],
-    }));
-
-    const deployProdProject = new codebuild.PipelineProject(this, 'updateStackProd', createUpdateStackSpec(props.prodStack.stackName));
-    deployProdProject.addToRolePolicy(new iam.PolicyStatement({
+    const deployProject = new codebuild.PipelineProject(this, 'updateStackDev', createUpdateStackSpec(props.stack.stackName));
+    deployProject.addToRolePolicy(new iam.PolicyStatement({
       actions: ['*'], // cloudformation:DescribeStacks, ssm:GetParameter
       resources: ['*'],
     }));
@@ -93,23 +86,20 @@ export class BuildPipelineStack extends core.Stack {
         //   ],
         // },
         {
-          stageName: 'Dev',
+          stageName: 'Deploy',
           actions: [
-            new codepipeline_actions.CodeBuildAction({
-              actionName: `Deploy${props.devStack.stackName}`,
-              project: deployDevProject,
-              input: cdkBuildOutput,
+            new codepipeline_actions.CloudFormationCreateUpdateStackAction({
+              actionName: props.stack.stackName,
+              stackName: props.stack.stackName,
+              templatePath: cdkBuildOutput.atPath(`${this.stackName}.template.json`),
+              adminPermissions: true,
             }),
-          ],
-        },
-        {
-          stageName: 'Prod',
-          actions: [
-            new codepipeline_actions.CodeBuildAction({
-              actionName: `Deploy${props.prodStack.stackName}`,
-              project: deployProdProject,
-              input: cdkBuildOutput,
-            }),
+
+            // .CodeBuildAction({
+            //   actionName: `Deploy${props.stack.stackName}`,
+            //   project: deployProject,
+            //   input: cdkBuildOutput,
+            // }),
           ],
         },
       ],
@@ -135,7 +125,7 @@ function createUpdateStackSpec(stackName: string) {
       },
     }),
     environment: {
-      buildImage: codebuild.LinuxBuildImage.STANDARD_3_0,
+      buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_3,
     },
   };
 }

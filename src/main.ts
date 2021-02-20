@@ -1,32 +1,20 @@
 import * as core from '@aws-cdk/core';
 import { BuildPipelineStack } from './build-pipeline-stack';
-import { GlobalDynamoDBStack } from './global-dynamodb-stack';
+import { WafStack } from './waf-stack';
 
 
-const buildEnv = {
+const env = {
   account: '981237193288',
-  region: 'ca-central-1',
-};
-
-const devEnv = {
-  account: '981237193288',
-  region: 'us-east-1',
-};
-
-const prodEnv = {
-  account: '991829251144',
-  region: 'us-east-1',
+  region: 'eu-central-1',
 };
 
 const app = new core.App();
 
-const ddbDevStack = new GlobalDynamoDBStack(app, 'DdbDev3', { env: devEnv });
-const ddbProdStack = new GlobalDynamoDBStack(app, 'DdbProd', { env: prodEnv });
+const ddbDevStack = new WafStack(app, 'waf', { env: env });
 
-new BuildPipelineStack(app, 'BuildPipelineStack', {
-  env: buildEnv,
-  devStack: ddbDevStack,
-  prodStack: ddbProdStack,
+new BuildPipelineStack(app, 'WafPipe', {
+  env: env,
+  stack: ddbDevStack,
 });
 
 app.synth();

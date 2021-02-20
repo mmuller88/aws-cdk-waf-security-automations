@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@types/aws-lambda",
+      "type": "build"
+    },
+    {
       "name": "@types/jest",
       "type": "build"
     },
@@ -21,7 +25,20 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
+      "type": "build"
+    },
+    {
+      "name": "aws-lambda",
+      "type": "build"
+    },
+    {
+      "name": "aws-sdk",
+      "type": "build"
+    },
+    {
+      "name": "esbuild",
+      "version": "^0",
       "type": "build"
     },
     {
@@ -55,7 +72,7 @@
     },
     {
       "name": "projen",
-      "version": "^0.16.7",
+      "version": "^0.16.9",
       "type": "build"
     },
     {
@@ -78,37 +95,69 @@
     },
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codebuild",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codepipeline-actions",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codepipeline",
-      "version": "^1.89.0",
-      "type": "runtime"
-    },
-    {
-      "name": "@aws-cdk/aws-dynamodb",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-iam",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda-nodejs",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-lambda",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-s3",
+      "version": "^1.90.1",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.89.0",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/custom-resources",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
+      "name": "@types/aws-lambda",
+      "type": "runtime"
+    },
+    {
+      "name": "aws-lambda",
+      "type": "runtime"
+    },
+    {
+      "name": "aws-sdk",
+      "type": "runtime"
+    },
+    {
+      "name": "esbuild",
+      "version": "^0",
       "type": "runtime"
     }
   ],
