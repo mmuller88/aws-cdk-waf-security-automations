@@ -15,7 +15,7 @@ export class WafStack extends core.Stack {
       stackName: 'waf-security-automations',
       accessLogBucket: logBucket,
       options: {
-        activateSqlInjectionProtection: false,
+        //activateSqlInjectionProtection: false,
         // See below
       },
     });

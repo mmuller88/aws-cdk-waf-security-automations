@@ -10,11 +10,11 @@ const env = {
 
 const app = new core.App();
 
-const ddbDevStack = new WafStack(app, 'waf', { env: env });
+const wafStack = new WafStack(app, 'waf', { env: env });
 
 new BuildPipelineStack(app, 'WafPipe', {
   env: env,
-  stack: ddbDevStack,
+  stack: wafStack,
 });
 
 app.synth();
