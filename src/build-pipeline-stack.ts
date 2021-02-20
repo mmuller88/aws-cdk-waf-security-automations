@@ -51,7 +51,7 @@ export class BuildPipelineStack extends core.Stack {
           actions: [
             new codepipeline_actions.GitHubSourceAction({
               owner: 'mmuller88',
-              repo: 'cdk-dynamodb-pipe-poc',
+              repo: 'aws-cdk-waf-security-automations',
               branch: 'main',
               output: sourceOutput,
               actionName: 'GitHubSource',
