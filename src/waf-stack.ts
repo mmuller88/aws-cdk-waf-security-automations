@@ -12,7 +12,7 @@ export class WafStack extends core.Stack {
     });
 
     new WafSecurityAutomations(this, 'waf-security-automations', {
-      stackName: 'waf-security-automations',
+      stackName: this.stackName,
       accessLogBucket: logBucket,
       options: {
         //activateSqlInjectionProtection: false,
