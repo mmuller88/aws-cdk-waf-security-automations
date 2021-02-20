@@ -26,19 +26,19 @@ const optionsDefaults = {
 
 interface WafSecurityAutomationsOptions {
   readonly templateVersion: string;
-  readonly activateSqlInjectionProtection: boolean | undefined;
-  readonly activateCrossSiteScriptingProtection: boolean | undefined;
-  readonly activateHttpFloodProtection: boolean | undefined;
-  readonly httpFloodProtectionMethod: 'waf' | 'lambda' | 'athena' | undefined;
-  readonly activateScannersProbesProtection: boolean | undefined;
-  readonly scannersProbesProtectionMethod: 'lambda' | 'athena' | undefined;
-  readonly activateReputationListsProtection: boolean | undefined;
-  readonly activateBadBotProtection: boolean | undefined;
-  readonly endpointType: 'cloudfront' | 'alb' | undefined;
-  readonly requestThresholdPerFiveMinutes: number | undefined;
-  readonly errorThresholdPerMinute: number | undefined;
-  readonly wafBlockPeriodMinutes: number | undefined;
-  readonly keepDataInOriginalS3Location: boolean | undefined;
+  readonly activateSqlInjectionProtection?: boolean;
+  readonly activateCrossSiteScriptingProtection?: boolean;
+  readonly activateHttpFloodProtection?: boolean;
+  readonly httpFloodProtectionMethod?: 'waf' | 'lambda' | 'athena';
+  readonly activateScannersProbesProtection?: boolean;
+  readonly scannersProbesProtectionMethod?: 'lambda' | 'athena';
+  readonly activateReputationListsProtection?: boolean;
+  readonly activateBadBotProtection?: boolean;
+  readonly endpointType?: 'cloudfront' | 'alb';
+  readonly requestThresholdPerFiveMinutes?: number;
+  readonly errorThresholdPerMinute?: number;
+  readonly wafBlockPeriodMinutes?: number;
+  readonly keepDataInOriginalS3Location?: boolean;
 }
 
 export interface WafSecurityAutomationsProps {
