@@ -91,7 +91,7 @@ export class BuildPipelineStack extends core.Stack {
             new codepipeline_actions.CloudFormationCreateUpdateStackAction({
               actionName: props.stack.stackName,
               stackName: props.stack.stackName,
-              templatePath: cdkBuildOutput.atPath(`${this.stackName}.template.json`),
+              templatePath: cdkBuildOutput.atPath(`cdk.out/${this.stackName}.template.json`),
               adminPermissions: true,
             }),
 
