@@ -3,6 +3,8 @@ import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
 // import * as iam from '@aws-cdk/aws-iam';
 import * as core from '@aws-cdk/core';
+import * as cfn from '@aws-cdk/aws-cloudformation';
+import * as iam from '@aws-cdk/aws-iam';
 
 export interface BuildPipelineStackProps extends core.StackProps {
   stack: core.Stack;
@@ -93,6 +95,10 @@ export class BuildPipelineStack extends core.Stack {
               stackName: props.stack.stackName,
               templatePath: cdkBuildOutput.atPath(`cdk.out/${props.stack.stackName}.template.json`),
               adminPermissions: true,
+              // role: new iam.Role(this, 'DeployRole', {
+              //   assumedBy
+              // })
+              capabilities: [cfn.CloudFormationCapabilities.NAMED_IAM, cfn.CloudFormationCapabilities.AUTO_EXPAND],
             }),
 
             // .CodeBuildAction({

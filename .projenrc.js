@@ -23,6 +23,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-codepipeline',
     '@aws-cdk/aws-codepipeline-actions',
     '@aws-cdk/aws-s3',
+    '@aws-cdk/aws-cloudformation',
   ],
   deps: deps,
   devDeps: deps,
