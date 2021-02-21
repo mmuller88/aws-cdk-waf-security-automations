@@ -128,7 +128,7 @@
     "@aws-cdk/core" "1.90.1"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-cloudformation@1.90.1":
+"@aws-cdk/aws-cloudformation@1.90.1", "@aws-cdk/aws-cloudformation@^1.90.1":
   version "1.90.1"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cloudformation/-/aws-cloudformation-1.90.1.tgz#c705e44f95de0b1cdb74388eb3932a76d786730b"
   integrity sha512-v0I9lC4blfQMbzPqBy2ilYyd6//IUWdCh7MuzJDBqINgIe9/oIatoTPlf4ADaw1fyoE+wzTrerd7Ze+Ynl0ulg==

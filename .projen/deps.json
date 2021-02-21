@@ -99,6 +99,11 @@
       "type": "runtime"
     },
     {
+      "name": "@aws-cdk/aws-cloudformation",
+      "version": "^1.90.1",
+      "type": "runtime"
+    },
+    {
       "name": "@aws-cdk/aws-codebuild",
       "version": "^1.90.1",
       "type": "runtime"

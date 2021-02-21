@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "@aws-cdk/assert": "^1.90.1",
+    "@aws-cdk/aws-cloudformation": "^1.90.1",
     "@aws-cdk/aws-codebuild": "^1.90.1",
     "@aws-cdk/aws-codepipeline": "^1.90.1",
     "@aws-cdk/aws-codepipeline-actions": "^1.90.1",
