@@ -5,7 +5,7 @@ import { WafStack } from './waf-stack';
 
 const env = {
   account: '981237193288',
-  region: 'eu-central-1',
+  region: 'us-east-1',
 };
 
 const app = new core.App();
