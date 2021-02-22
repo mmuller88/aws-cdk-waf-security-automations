@@ -94,7 +94,7 @@ export class WafSecurityAutomations extends cdk.Construct {
       serviceToken: provider.serviceToken,
       properties: {
         StackName: this.stackName,
-        //AccessLogBucketName: this.accessLogBucket.bucketName,
+        AccessLogBucketName: this.accessLogBucket.bucketName,
         TemplateVersion: options.templateVersion,
         Options: JSON.stringify(options),
       },
