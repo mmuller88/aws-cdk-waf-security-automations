@@ -12,7 +12,6 @@ const app = new core.App();
 
 const wafStack = new WafStack(app, 'waf', {
   env: env,
-  stackName: 'waf',
 });
 
 new BuildPipelineStack(app, 'WafPipe', {
