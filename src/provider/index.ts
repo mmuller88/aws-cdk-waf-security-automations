@@ -193,7 +193,7 @@ export const onCreate = async (event: CloudFormationCustomResourceCreateEvent): 
   log({ message: 'Running onCreate' });
   const args = sdkArgsForCreateOrUpdate(event);
   log({ message: 'Running createStack', args });
-  const cfn = new AWS.CloudFormation({ region: 'us-east-1' });
+  const cfn = new AWS.CloudFormation();
   const response = await cfn.createStack(args).promise();
   log({ message: 'Ran createStack', response });
   return {
@@ -206,7 +206,7 @@ export const onUpdate = async (event: CloudFormationCustomResourceUpdateEvent): 
   log({ message: 'Running onUpdate' });
   const args = sdkArgsForCreateOrUpdate(event);
   log({ message: 'Running updateStack', args });
-  const cfn = new AWS.CloudFormation({ region: 'us-east-1' });
+  const cfn = new AWS.CloudFormation();
   const response = await cfn.updateStack(args).promise();
   log({ message: 'Ran updateStack', response });
   return {
@@ -258,7 +258,7 @@ interface WebAclProps {
 }
 
 const lookupWebAclByName = async (webAclName: string): Promise<WebAclProps | undefined> => {
-  const wafv2 = new AWS.WAFV2({ region: 'us-east-1' });
+  const wafv2 = new AWS.WAFV2();
   // TODO: handle regional WAF
 
   const response = await wafv2
@@ -301,7 +301,7 @@ const lookupWebAclByName = async (webAclName: string): Promise<WebAclProps | und
 export const isComplete = async (event: CloudFormationCustomResourceEvent): Promise<any> => {
   log({ message: 'Starting isComplete', event });
   const StackName = event.ResourceProperties.StackName;
-  const cfn = new AWS.CloudFormation({ region: 'us-east-1' });
+  const cfn = new AWS.CloudFormation();
   const response = await cfn
     .describeStacks({
       StackName,
