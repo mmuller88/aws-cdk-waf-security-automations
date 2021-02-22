@@ -218,7 +218,7 @@ export const onUpdate = async (event: CloudFormationCustomResourceUpdateEvent): 
 export const onDelete = async (event: CloudFormationCustomResourceDeleteEvent): Promise<any> => {
   log({ message: 'Running onDelete' });
 
-  const cfn = new AWS.CloudFormation({ region: 'us-east-1' });
+  const cfn = new AWS.CloudFormation();
   const response = await cfn
     .deleteStack({
       StackName: event.PhysicalResourceId,
