@@ -3,7 +3,7 @@
   "scripts": {
     "projen": "npx projen",
     "start": "npx projen start",
-    "cdkDeploy": "cdk deploy",
+    "cdkDeploy": "tsc && cdk deploy",
     "cdkDestroy": "cdk destroy",
     "clobber": "npx projen clobber",
     "compile": "npx projen compile",
@@ -57,7 +57,6 @@
     "@aws-cdk/aws-codepipeline-actions": "^1.90.1",
     "@aws-cdk/aws-iam": "^1.90.1",
     "@aws-cdk/aws-lambda": "^1.90.1",
-    "@aws-cdk/aws-lambda-nodejs": "^1.90.1",
     "@aws-cdk/aws-s3": "^1.90.1",
     "@aws-cdk/core": "^1.90.1",
     "@aws-cdk/custom-resources": "^1.90.1",

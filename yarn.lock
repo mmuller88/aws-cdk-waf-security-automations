@@ -457,15 +457,6 @@
     "@aws-cdk/cx-api" "1.90.1"
     constructs "^3.2.0"
 
-"@aws-cdk/aws-lambda-nodejs@^1.90.1":
-  version "1.90.1"
-  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda-nodejs/-/aws-lambda-nodejs-1.90.1.tgz#a5d8daf990215a1e7f48eb066746c9c1cbcda2d5"
-  integrity sha512-sJ5DPYM/K8oL2O2k2+iaOFgUM27hRa+w3KFEn7p7vkrmkQ2NF5maDtqrmS85vQSMmZNKvbI97j4ZCnZj29+H+g==
-  dependencies:
-    "@aws-cdk/aws-lambda" "1.90.1"
-    "@aws-cdk/core" "1.90.1"
-    constructs "^3.2.0"
-
 "@aws-cdk/aws-lambda@1.90.1", "@aws-cdk/aws-lambda@^1.90.1":
   version "1.90.1"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-lambda/-/aws-lambda-1.90.1.tgz#a64bf52d2631a206e2b8733f07a5d3d3c603b1ae"

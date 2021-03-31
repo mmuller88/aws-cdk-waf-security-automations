@@ -1,8 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-require-imports
-import path = require('path');
+// import path = require('path');
 import * as iam from '@aws-cdk/aws-iam';
 import * as lambda from '@aws-cdk/aws-lambda';
-import * as lambdaJs from '@aws-cdk/aws-lambda-nodejs';
+// import * as lambdaJs from '@aws-cdk/aws-lambda-nodejs';
 import * as s3 from '@aws-cdk/aws-s3';
 import * as cdk from '@aws-cdk/core';
 import * as cr from '@aws-cdk/custom-resources';
@@ -67,8 +67,21 @@ export class WafSecurityAutomations extends cdk.Construct {
       ...optionsDefaults,
       ...((_b = props.options) !== null && _b !== void 0 ? _b : {}),
     };
-    const providerFunctionShared = {
-      entry: path.join(__dirname, 'provider', 'index.ts'),
+    // const providerFunctionShared = {
+    //   entry: path.join(__dirname, 'provider', 'index.ts'),
+    //   runtime: lambda.Runtime.NODEJS_12_X,
+    //   timeout: cdk.Duration.minutes(15),
+    //   initialPolicy: [
+    //     new iam.PolicyStatement({
+    //       resources: ['*'],
+    //       actions: ['*'],
+    //     }),
+    //   ],
+    // };
+
+    const onEventHandler = new lambda.Function(this, 'waf-automations-event', {
+      code: new lambda.AssetCode('lib/provider'),
+      handler: 'index.onEvent',
       runtime: lambda.Runtime.NODEJS_12_X,
       timeout: cdk.Duration.minutes(15),
       initialPolicy: [
@@ -77,15 +90,28 @@ export class WafSecurityAutomations extends cdk.Construct {
           actions: ['*'],
         }),
       ],
-    };
-    const onEventHandler = new lambdaJs.NodejsFunction(this, 'waf-automations-event', {
-      ...providerFunctionShared,
-      handler: 'onEvent',
     });
-    const isCompleteHandler = new lambdaJs.NodejsFunction(this, 'waf-automations-complete', {
-      ...providerFunctionShared,
-      handler: 'isComplete',
+
+    const isCompleteHandler = new lambda.Function(this, 'waf-automations-complete', {
+      code: new lambda.AssetCode('lib/provider'),
+      handler: 'index.isComplete',
+      runtime: lambda.Runtime.NODEJS_12_X,
+      timeout: cdk.Duration.minutes(15),
+      initialPolicy: [
+        new iam.PolicyStatement({
+          resources: ['*'],
+          actions: ['*'],
+        }),
+      ],
     });
+    // const onEventHandler = new lambdaJs.NodejsFunction(this, 'waf-automations-event', {
+    //   ...providerFunctionShared,
+    //   handler: 'onEvent',
+    // });
+    // const isCompleteHandler = new lambdaJs.NodejsFunction(this, 'waf-automations-complete', {
+    //   ...providerFunctionShared,
+    //   handler: 'isComplete',
+    // });
     const provider = new cr.Provider(this, 'waf-automations-provider', {
       onEventHandler,
       isCompleteHandler,
