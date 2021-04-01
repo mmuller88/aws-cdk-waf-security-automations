@@ -7,7 +7,7 @@ import * as core from '@aws-cdk/core';
 // import * as iam from '@aws-cdk/aws-iam';
 
 export interface BuildPipelineStackProps extends core.StackProps {
-  stackName: string;
+  wafStackName: string;
 }
 
 export class BuildPipelineStack extends core.Stack {
@@ -91,9 +91,9 @@ export class BuildPipelineStack extends core.Stack {
           stageName: 'Deploy',
           actions: [
             new codepipeline_actions.CloudFormationCreateUpdateStackAction({
-              actionName: props.stackName,
-              stackName: props.stackName,
-              templatePath: cdkBuildOutput.atPath(`cdk.out/${props.stackName}.template.json`),
+              actionName: props.wafStackName,
+              stackName: props.wafStackName,
+              templatePath: cdkBuildOutput.atPath(`cdk.out/${props.wafStackName}.template.json`),
               adminPermissions: true,
               // role:
             }),
