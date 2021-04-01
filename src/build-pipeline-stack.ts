@@ -1,10 +1,7 @@
-// import * as cfn from '@aws-cdk/aws-cloudformation';
 import * as codebuild from '@aws-cdk/aws-codebuild';
 import * as codepipeline from '@aws-cdk/aws-codepipeline';
 import * as codepipeline_actions from '@aws-cdk/aws-codepipeline-actions';
-// import * as iam from '@aws-cdk/aws-iam';
 import * as core from '@aws-cdk/core';
-// import * as iam from '@aws-cdk/aws-iam';
 
 export interface BuildPipelineStackProps extends core.StackProps {
   wafStackName: string;
@@ -40,12 +37,6 @@ export class BuildPipelineStack extends core.Stack {
     const sourceOutput = new codepipeline.Artifact();
     const cdkBuildOutput = new codepipeline.Artifact('CdkBuildOutput');
 
-    // const deployProject = new codebuild.PipelineProject(this, 'deployProject', createUpdateStackSpec(props.stack.stackName));
-    // deployProject.addToRolePolicy(new iam.PolicyStatement({
-    //   actions: ['*'], // cloudformation:DescribeStacks, ssm:GetParameter
-    //   resources: ['*'],
-    // }));
-
     new codepipeline.Pipeline(this, 'BuildPipeline', {
       stages: [
         {
@@ -75,18 +66,6 @@ export class BuildPipelineStack extends core.Stack {
             }),
           ],
         },
-        // I saw that in the web about self mutating the pipeline. But please don't use it or be very causes.
-        // {
-        //   stageName: 'UpdatePipeline',
-        //   actions: [
-        //     new codepipeline_actions.CloudFormationCreateUpdateStackAction({
-        //       actionName: 'AdministerPipeline',
-        //       templatePath: cdkBuildOutput.atPath(`${this.stackName}.template.json`),
-        //       stackName: this.stackName,
-        //       adminPermissions: true,
-        //     }),
-        //   ],
-        // },
         {
           stageName: 'Deploy',
           actions: [
@@ -95,13 +74,7 @@ export class BuildPipelineStack extends core.Stack {
               stackName: props.wafStackName,
               templatePath: cdkBuildOutput.atPath(`cdk.out/${props.wafStackName}.template.json`),
               adminPermissions: true,
-              // role:
             }),
-            // new codepipeline_actions.CodeBuildAction({
-            //   actionName: `Deploy${props.stack.stackName}`,
-            //   project: deployProject,
-            //   input: cdkBuildOutput,
-            // }),
           ],
         },
       ],
@@ -109,25 +82,3 @@ export class BuildPipelineStack extends core.Stack {
     });
   }
 }
-
-// function createUpdateStackSpec(stackName: string) {
-//   return {
-//     buildSpec: codebuild.BuildSpec.fromObject({
-//       version: '0.2',
-//       phases: {
-//         install: {
-//           'runtime-versions': { nodejs: 12 },
-//           'commands': ['npm i npm@latest -g', 'npm i cdk@latest -g', 'npm install'],
-//         },
-//         build: {
-//           commands: [
-//             `cdk deploy --app 'cdk.out/' ${stackName} --require-approval never`,
-//           ],
-//         },
-//       },
-//     }),
-//     environment: {
-//       buildImage: codebuild.LinuxBuildImage.AMAZON_LINUX_2_3,
-//     },
-//   };
-// }

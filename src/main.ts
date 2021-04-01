@@ -10,14 +10,14 @@ const env = {
 
 const app = new core.App();
 
-const wafStack = new WafStack(app, 'waf2', {
+const wafStack = new WafStack(app, 'waf', {
   env: env,
   WafCfnParameters: {
     AppAccessLogBucket: 'mmwafbucket',
   },
 });
 
-new BuildPipelineStack(app, 'WafPipe', {
+new BuildPipelineStack(app, 'WafPipe2', {
   env: env,
   wafStackName: wafStack.stackName,
 });

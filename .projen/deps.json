@@ -70,7 +70,7 @@
     },
     {
       "name": "projen",
-      "version": "^0.17.16",
+      "version": "^0.17.20",
       "type": "build"
     },
     {
@@ -96,11 +96,6 @@
       "type": "runtime"
     },
     {
-      "name": "@aws-cdk/aws-cloudformation",
-      "version": "^1.95.2",
-      "type": "runtime"
-    },
-    {
       "name": "@aws-cdk/aws-codebuild",
       "version": "^1.95.2",
       "type": "runtime"
@@ -116,16 +111,6 @@
       "type": "runtime"
     },
     {
-      "name": "@aws-cdk/aws-iam",
-      "version": "^1.95.2",
-      "type": "runtime"
-    },
-    {
-      "name": "@aws-cdk/aws-lambda",
-      "version": "^1.95.2",
-      "type": "runtime"
-    },
-    {
       "name": "@aws-cdk/aws-s3",
       "version": "^1.95.2",
       "type": "runtime"
@@ -137,11 +122,6 @@
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.95.2",
-      "type": "runtime"
-    },
-    {
-      "name": "@aws-cdk/custom-resources",
       "version": "^1.95.2",
       "type": "runtime"
     },
