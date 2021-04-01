@@ -10,7 +10,7 @@ const deps = [
 const project = new AwsCdkTypeScriptApp({
   authorAddress: 'damadden88@googlemail.de',
   authorName: 'martin.mueller',
-  cdkVersion: '1.90.1',
+  cdkVersion: '1.95.2',
   defaultReleaseBranch: 'main',
   jsiiFqn: 'projen.AwsCdkTypeScriptApp',
   name: 'cdk-dynamodb-pipe-poc',
@@ -24,6 +24,7 @@ const project = new AwsCdkTypeScriptApp({
     '@aws-cdk/aws-codepipeline-actions',
     '@aws-cdk/aws-s3',
     '@aws-cdk/aws-cloudformation',
+    '@aws-cdk/cloudformation-include',
   ],
   deps: deps,
   devDeps: deps,
