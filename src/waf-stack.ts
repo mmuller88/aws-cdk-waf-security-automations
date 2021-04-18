@@ -12,8 +12,8 @@ export interface WafStackProps extends core.StackProps {
 
 
 export class WafStack extends core.Stack {
-  wafWebAclArn: core.CfnOutput;
-  wafWebAcl: core.CfnOutput;
+  wafWebAclArn: string;
+  wafWebAcl: string;
 
   constructor(scope: core.Construct, id: string, props: WafStackProps) {
     super(scope, id, props);
@@ -27,7 +27,7 @@ export class WafStack extends core.Stack {
       },
     });
 
-    this.wafWebAclArn = cfnTemplate.getOutput('WAFWebACLArn');
-    this.wafWebAcl = cfnTemplate.getOutput('WAFWebACL');
+    this.wafWebAclArn = cfnTemplate.getOutput('WAFWebACLArn').value;
+    this.wafWebAcl = cfnTemplate.getOutput('WAFWebACL').value;
   }
 }

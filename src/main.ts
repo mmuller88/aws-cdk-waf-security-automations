@@ -22,7 +22,7 @@ wafStack;
 
 new ApiGWStack(app, 'api', {
   env: env,
-  wafWebAclArn: wafStack.wafWebAclArn.value,
+  wafWebAclArn: wafStack.wafWebAclArn,
 });
 
 // new BuildPipelineStack(app, 'WafPipe2', {
