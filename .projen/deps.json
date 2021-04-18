@@ -23,7 +23,7 @@
     },
     {
       "name": "aws-cdk",
-      "version": "^1.95.2",
+      "version": "1.97.0",
       "type": "build"
     },
     {
@@ -92,37 +92,52 @@
     },
     {
       "name": "@aws-cdk/assert",
-      "version": "^1.95.2",
+      "version": "1.97.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-apigateway",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codebuild",
-      "version": "^1.95.2",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codepipeline-actions",
-      "version": "^1.95.2",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-codepipeline",
-      "version": "^1.95.2",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/aws-s3",
-      "version": "^1.95.2",
+      "version": "1.97.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-wafregional",
+      "version": "1.97.0",
+      "type": "runtime"
+    },
+    {
+      "name": "@aws-cdk/aws-wafv2",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/cloudformation-include",
-      "version": "^1.95.2",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {
       "name": "@aws-cdk/core",
-      "version": "^1.95.2",
+      "version": "1.97.0",
       "type": "runtime"
     },
     {

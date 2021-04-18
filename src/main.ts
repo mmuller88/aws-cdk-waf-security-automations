@@ -1,5 +1,7 @@
+
 import * as core from '@aws-cdk/core';
-import { BuildPipelineStack } from './build-pipeline-stack';
+import { ApiGWStack } from './api-gw-stack';
+// import { BuildPipelineStack } from './build-pipeline-stack';
 import { WafStack } from './waf-stack';
 
 
@@ -12,14 +14,20 @@ const app = new core.App();
 
 const wafStack = new WafStack(app, 'waf', {
   env: env,
-  WafCfnParameters: {
-    AppAccessLogBucket: 'mmwafbucket',
-  },
+  // WafCfnParameters: {
+  //   AppAccessLogBucket: 'mmwafbucket',
+  // },
+});
+wafStack;
+
+new ApiGWStack(app, 'api', {
+  env: env,
+  wafWebAclArn: wafStack.wafWebAclArn.value,
 });
 
-new BuildPipelineStack(app, 'WafPipe2', {
-  env: env,
-  wafStackName: wafStack.stackName,
-});
+// new BuildPipelineStack(app, 'WafPipe2', {
+//   env: env,
+//   wafStackName: wafStack.stackName,
+// });
 
 app.synth();
